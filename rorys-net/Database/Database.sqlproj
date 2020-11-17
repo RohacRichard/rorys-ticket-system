@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{bccc7fb8-d77f-494c-82f3-d95f780f82d5}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -57,5 +57,37 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Tables\rorys" />
+    <Folder Include="Tables\rorys.collections" />
+    <Folder Include="Tables\rorys.links" />
+    <Folder Include="Security" />
+    <Folder Include="Security\Schemas" />
+    <Folder Include="Tables\rorys\Org. structure" />
+    <Folder Include="Tables\rorys\Tickets" />
+    <Folder Include="SchemaCompares" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\rorys.collections\Role.sql" />
+    <Build Include="Tables\rorys.collections\TicketType.sql" />
+    <Build Include="Security\Schemas\rorys.sql" />
+    <Build Include="Security\Schemas\rorys.col.sql" />
+    <Build Include="Tables\rorys.collections\TicketStatus.sql" />
+    <Build Include="Tables\rorys.collections\TicketTransition.sql" />
+    <Build Include="Security\Schemas\rorys.link.sql" />
+    <Build Include="Tables\rorys\Org. structure\Organization.sql" />
+    <Build Include="Tables\rorys\Org. structure\Team.sql" />
+    <Build Include="Tables\rorys\Org. structure\Person.sql" />
+    <Build Include="Tables\rorys\Org. structure\User.sql" />
+    <Build Include="Tables\rorys.links\LnkTeamToPerson.sql" />
+    <Build Include="Tables\rorys.links\LnkRoleToUser.sql" />
+    <Build Include="Tables\rorys\Tickets\Ticket.sql" />
+    <Build Include="Tables\rorys.collections\Resolution.sql" />
+    <Build Include="Tables\rorys\Tickets\Incident.sql" />
+    <Build Include="Tables\rorys\Tickets\UserRequest.sql" />
+    <Build Include="SchemaCompares\ProjectToLocalhost.scmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,6 @@
+﻿CREATE TABLE [rorys.col].[Role]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] NVARCHAR(255) NOT NULL, 
+    [Description] NVARCHAR(255) NOT NULL
+)

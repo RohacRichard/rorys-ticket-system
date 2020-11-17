@@ -1,0 +1,5 @@
+﻿CREATE TABLE [rorys.col].[TicketType]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
+    [name] NVARCHAR(255) NOT NULL
+)

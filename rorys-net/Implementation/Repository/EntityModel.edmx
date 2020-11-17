@@ -1,0 +1,1219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RorysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Incident">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="bigint" Nullable="false" />
+          <Property Name="PossibleCyberIncident" Type="bit" Nullable="false" />
+          <Property Name="PossibleGDPRIncident" Type="bit" Nullable="false" />
+          <Property Name="AffectedSystemsCount" Type="int" Nullable="false" />
+          <Property Name="AffectedUsersCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActiveStatus" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ParentId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActiveStatus" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="MobilePhone" Type="nvarchar" MaxLength="255" />
+          <Property Name="Function" Type="nvarchar" MaxLength="255" />
+          <Property Name="Picture" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActiveStatus" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="OrgId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GenReference" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="TicketTypeId" Type="bigint" Nullable="false" />
+          <Property Name="OrgId" Type="bigint" Nullable="false" />
+          <Property Name="CallerId" Type="bigint" Nullable="false" />
+          <Property Name="SolverTeamId" Type="bigint" />
+          <Property Name="SolverId" Type="bigint" />
+          <Property Name="StatusId" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="ResolveDate" Type="datetime" />
+          <Property Name="CloseDate" Type="datetime" />
+          <Property Name="TicketLog" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ResolutionId" Type="bigint" />
+          <Property Name="ResolutionDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActiveStatus" Type="bit" Nullable="false" />
+          <Property Name="PersonId" Type="bigint" Nullable="false" />
+          <Property Name="OrgId" Type="bigint" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="511" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="bigint" Nullable="false" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="Urgency" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Resolution">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TicketStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="TicketTypeId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TicketTransition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="StatusFromId" Type="bigint" Nullable="false" />
+          <Property Name="StatusToId" Type="bigint" Nullable="false" />
+          <Property Name="TicketTypeId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LnkRoleToUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="bigint" Nullable="false" />
+          <Property Name="RoleId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LnkTeamToPerson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="bigint" Nullable="false" />
+          <Property Name="PersonId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ChildOrg_ToParentOrg">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="Organization1" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incident_ToTicket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="Incident" Type="Self.Incident" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incident">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkRoleToUser_LinkToPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="LnkRoleToUser" Type="Self.LnkRoleToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkRoleToUser">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkRoleToUser_LinkToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="LnkRoleToUser" Type="Self.LnkRoleToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkRoleToUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkTeamToPerson_LinkToPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="LnkTeamToPerson" Type="Self.LnkTeamToPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkTeamToPerson">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkTeamToPerson_LinkToTeam">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="LnkTeamToPerson" Type="Self.LnkTeamToPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkTeamToPerson">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusFrom_ToTicketStatus">
+          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="1" />
+          <End Role="TicketTransition" Type="Self.TicketTransition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketTransition">
+              <PropertyRef Name="StatusFromId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusTo_ToTicketStatus">
+          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="1" />
+          <End Role="TicketTransition" Type="Self.TicketTransition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketTransition">
+              <PropertyRef Name="StatusToId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_ToOrganization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToOrganization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToPerson_Caller">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="CallerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToPerson_Solver">
+          <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="SolverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToResolution">
+          <End Role="Resolution" Type="Self.Resolution" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resolution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="ResolutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToStatus">
+          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToTeam">
+          <End Role="Team" Type="Self.Team" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="SolverTeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToTicketType">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketStatus_ToTicketType">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="1" />
+          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketStatus">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketTransition_ToTicketType">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="1" />
+          <End Role="TicketTransition" Type="Self.TicketTransition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketTransition">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToOrganization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRequest_ToTicket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="UserRequest" Type="Self.UserRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRequest">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RorysModelStoreContainer">
+          <EntitySet Name="Incident" EntityType="Self.Incident" Schema="rorys" store:Type="Tables" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" Schema="rorys" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="rorys" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="rorys" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="rorys" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="rorys" store:Type="Tables" />
+          <EntitySet Name="UserRequest" EntityType="Self.UserRequest" Schema="rorys" store:Type="Tables" />
+          <EntitySet Name="Resolution" EntityType="Self.Resolution" Schema="rorys.col" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="rorys.col" store:Type="Tables" />
+          <EntitySet Name="TicketStatus" EntityType="Self.TicketStatus" Schema="rorys.col" store:Type="Tables" />
+          <EntitySet Name="TicketTransition" EntityType="Self.TicketTransition" Schema="rorys.col" store:Type="Tables" />
+          <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="rorys.col" store:Type="Tables" />
+          <EntitySet Name="LnkRoleToUser" EntityType="Self.LnkRoleToUser" Schema="rorys.link" store:Type="Tables" />
+          <EntitySet Name="LnkTeamToPerson" EntityType="Self.LnkTeamToPerson" Schema="rorys.link" store:Type="Tables" />
+          <AssociationSet Name="FK_ChildOrg_ToParentOrg" Association="Self.FK_ChildOrg_ToParentOrg">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Organization1" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incident_ToTicket" Association="Self.FK_Incident_ToTicket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Incident" EntitySet="Incident" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkRoleToUser_LinkToPerson" Association="Self.FK_LnkRoleToUser_LinkToPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkRoleToUser_LinkToRole" Association="Self.FK_LnkRoleToUser_LinkToRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkTeamToPerson_LinkToPerson" Association="Self.FK_LnkTeamToPerson_LinkToPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="LnkTeamToPerson" EntitySet="LnkTeamToPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkTeamToPerson_LinkToTeam" Association="Self.FK_LnkTeamToPerson_LinkToTeam">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="LnkTeamToPerson" EntitySet="LnkTeamToPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusFrom_ToTicketStatus" Association="Self.FK_StatusFrom_ToTicketStatus">
+            <End Role="TicketStatus" EntitySet="TicketStatus" />
+            <End Role="TicketTransition" EntitySet="TicketTransition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusTo_ToTicketStatus" Association="Self.FK_StatusTo_ToTicketStatus">
+            <End Role="TicketStatus" EntitySet="TicketStatus" />
+            <End Role="TicketTransition" EntitySet="TicketTransition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_ToOrganization" Association="Self.FK_Team_ToOrganization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToOrganization" Association="Self.FK_Ticket_ToOrganization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToPerson_Caller" Association="Self.FK_Ticket_ToPerson_Caller">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToPerson_Solver" Association="Self.FK_Ticket_ToPerson_Solver">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToResolution" Association="Self.FK_Ticket_ToResolution">
+            <End Role="Resolution" EntitySet="Resolution" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToStatus" Association="Self.FK_Ticket_ToStatus">
+            <End Role="TicketStatus" EntitySet="TicketStatus" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToTeam" Association="Self.FK_Ticket_ToTeam">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToTicketType" Association="Self.FK_Ticket_ToTicketType">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketStatus_ToTicketType" Association="Self.FK_TicketStatus_ToTicketType">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="TicketStatus" EntitySet="TicketStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketTransition_ToTicketType" Association="Self.FK_TicketTransition_ToTicketType">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="TicketTransition" EntitySet="TicketTransition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToOrganization" Association="Self.FK_User_ToOrganization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToPerson" Association="Self.FK_User_ToPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRequest_ToTicket" Association="Self.FK_UserRequest_ToTicket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="UserRequest" EntitySet="UserRequest" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RorysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Incident">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int64" Nullable="false" />
+          <Property Name="PossibleCyberIncident" Type="Boolean" Nullable="false" />
+          <Property Name="PossibleGDPRIncident" Type="Boolean" Nullable="false" />
+          <Property Name="AffectedSystemsCount" Type="Int32" Nullable="false" />
+          <Property Name="AffectedUsersCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Incident_ToTicket" FromRole="Incident" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActiveStatus" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Organization1" Relationship="Self.FK_ChildOrg_ToParentOrg" FromRole="Organization" ToRole="Organization1" />
+          <NavigationProperty Name="Organization2" Relationship="Self.FK_ChildOrg_ToParentOrg" FromRole="Organization1" ToRole="Organization" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Team_ToOrganization" FromRole="Organization" ToRole="Team" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_ToOrganization" FromRole="Organization" ToRole="Ticket" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_ToOrganization" FromRole="Organization" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActiveStatus" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MobilePhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Function" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="LnkRoleToUser" Relationship="Self.FK_LnkRoleToUser_LinkToPerson" FromRole="Person" ToRole="LnkRoleToUser" />
+          <NavigationProperty Name="LnkTeamToPerson" Relationship="Self.FK_LnkTeamToPerson_LinkToPerson" FromRole="Person" ToRole="LnkTeamToPerson" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_ToPerson_Caller" FromRole="Person" ToRole="Ticket" />
+          <NavigationProperty Name="Ticket1" Relationship="Self.FK_Ticket_ToPerson_Solver" FromRole="Person" ToRole="Ticket" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_ToPerson" FromRole="Person" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActiveStatus" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrgId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Team_ToOrganization" FromRole="Team" ToRole="Organization" />
+          <NavigationProperty Name="LnkTeamToPerson" Relationship="Self.FK_LnkTeamToPerson_LinkToTeam" FromRole="Team" ToRole="LnkTeamToPerson" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_ToTeam" FromRole="Team" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GenReference" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TicketTypeId" Type="Int64" Nullable="false" />
+          <Property Name="OrgId" Type="Int64" Nullable="false" />
+          <Property Name="CallerId" Type="Int64" Nullable="false" />
+          <Property Name="SolverTeamId" Type="Int64" />
+          <Property Name="SolverId" Type="Int64" />
+          <Property Name="StatusId" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ResolveDate" Type="DateTime" Precision="3" />
+          <Property Name="CloseDate" Type="DateTime" Precision="3" />
+          <Property Name="TicketLog" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ResolutionId" Type="Int64" />
+          <Property Name="ResolutionDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Incident" Relationship="Self.FK_Incident_ToTicket" FromRole="Ticket" ToRole="Incident" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_Ticket_ToOrganization" FromRole="Ticket" ToRole="Organization" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Ticket_ToPerson_Caller" FromRole="Ticket" ToRole="Person" />
+          <NavigationProperty Name="Person1" Relationship="Self.FK_Ticket_ToPerson_Solver" FromRole="Ticket" ToRole="Person" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_Ticket_ToTeam" FromRole="Ticket" ToRole="Team" />
+          <NavigationProperty Name="Resolution" Relationship="Self.FK_Ticket_ToResolution" FromRole="Ticket" ToRole="Resolution" />
+          <NavigationProperty Name="TicketStatus" Relationship="Self.FK_Ticket_ToStatus" FromRole="Ticket" ToRole="TicketStatus" />
+          <NavigationProperty Name="TicketType" Relationship="Self.FK_Ticket_ToTicketType" FromRole="Ticket" ToRole="TicketType" />
+          <NavigationProperty Name="UserRequest" Relationship="Self.FK_UserRequest_ToTicket" FromRole="Ticket" ToRole="UserRequest" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActiveStatus" Type="Boolean" Nullable="false" />
+          <Property Name="PersonId" Type="Int64" Nullable="false" />
+          <Property Name="OrgId" Type="Int64" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="511" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Organization" Relationship="Self.FK_User_ToOrganization" FromRole="User" ToRole="Organization" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_User_ToPerson" FromRole="User" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="UserRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int64" Nullable="false" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="Urgency" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_UserRequest_ToTicket" FromRole="UserRequest" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Resolution">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_ToResolution" FromRole="Resolution" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LnkRoleToUser" Relationship="Self.FK_LnkRoleToUser_LinkToRole" FromRole="Role" ToRole="LnkRoleToUser" />
+        </EntityType>
+        <EntityType Name="TicketStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TicketTypeId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_ToStatus" FromRole="TicketStatus" ToRole="Ticket" />
+          <NavigationProperty Name="TicketTransition" Relationship="Self.FK_StatusFrom_ToTicketStatus" FromRole="TicketStatus" ToRole="TicketTransition" />
+          <NavigationProperty Name="TicketTransition1" Relationship="Self.FK_StatusTo_ToTicketStatus" FromRole="TicketStatus" ToRole="TicketTransition" />
+          <NavigationProperty Name="TicketType" Relationship="Self.FK_TicketStatus_ToTicketType" FromRole="TicketStatus" ToRole="TicketType" />
+        </EntityType>
+        <EntityType Name="TicketTransition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StatusFromId" Type="Int64" Nullable="false" />
+          <Property Name="StatusToId" Type="Int64" Nullable="false" />
+          <Property Name="TicketTypeId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="TicketStatus" Relationship="Self.FK_StatusFrom_ToTicketStatus" FromRole="TicketTransition" ToRole="TicketStatus" />
+          <NavigationProperty Name="TicketStatus1" Relationship="Self.FK_StatusTo_ToTicketStatus" FromRole="TicketTransition" ToRole="TicketStatus" />
+          <NavigationProperty Name="TicketType" Relationship="Self.FK_TicketTransition_ToTicketType" FromRole="TicketTransition" ToRole="TicketType" />
+        </EntityType>
+        <EntityType Name="TicketType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_ToTicketType" FromRole="TicketType" ToRole="Ticket" />
+          <NavigationProperty Name="TicketStatus" Relationship="Self.FK_TicketStatus_ToTicketType" FromRole="TicketType" ToRole="TicketStatus" />
+          <NavigationProperty Name="TicketTransition" Relationship="Self.FK_TicketTransition_ToTicketType" FromRole="TicketType" ToRole="TicketTransition" />
+        </EntityType>
+        <EntityType Name="LnkRoleToUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int64" Nullable="false" />
+          <Property Name="RoleId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_LnkRoleToUser_LinkToPerson" FromRole="LnkRoleToUser" ToRole="Person" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_LnkRoleToUser_LinkToRole" FromRole="LnkRoleToUser" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="LnkTeamToPerson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int64" Nullable="false" />
+          <Property Name="PersonId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_LnkTeamToPerson_LinkToPerson" FromRole="LnkTeamToPerson" ToRole="Person" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_LnkTeamToPerson_LinkToTeam" FromRole="LnkTeamToPerson" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_Incident_ToTicket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="Incident" Type="Self.Incident" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incident">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChildOrg_ToParentOrg">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="Organization1" Type="Self.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_ToOrganization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToOrganization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToOrganization">
+          <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkRoleToUser_LinkToPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="LnkRoleToUser" Type="Self.LnkRoleToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkRoleToUser">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkTeamToPerson_LinkToPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="LnkTeamToPerson" Type="Self.LnkTeamToPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkTeamToPerson">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToPerson_Caller">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="CallerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToPerson_Solver">
+          <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="SolverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ToPerson">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkTeamToPerson_LinkToTeam">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="LnkTeamToPerson" Type="Self.LnkTeamToPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkTeamToPerson">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToTeam">
+          <End Role="Team" Type="Self.Team" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="SolverTeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToResolution">
+          <End Role="Resolution" Type="Self.Resolution" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resolution">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="ResolutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToStatus">
+          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_ToTicketType">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRequest_ToTicket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="UserRequest" Type="Self.UserRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRequest">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkRoleToUser_LinkToRole">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="LnkRoleToUser" Type="Self.LnkRoleToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkRoleToUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusFrom_ToTicketStatus">
+          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="1" />
+          <End Role="TicketTransition" Type="Self.TicketTransition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketTransition">
+              <PropertyRef Name="StatusFromId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StatusTo_ToTicketStatus">
+          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="1" />
+          <End Role="TicketTransition" Type="Self.TicketTransition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketTransition">
+              <PropertyRef Name="StatusToId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketStatus_ToTicketType">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="1" />
+          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketStatus">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketTransition_ToTicketType">
+          <End Role="TicketType" Type="Self.TicketType" Multiplicity="1" />
+          <End Role="TicketTransition" Type="Self.TicketTransition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketTransition">
+              <PropertyRef Name="TicketTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RorysEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Incident" EntityType="Self.Incident" />
+          <EntitySet Name="Organization" EntityType="Self.Organization" />
+          <EntitySet Name="Person" EntityType="Self.Person" />
+          <EntitySet Name="Team" EntityType="Self.Team" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="UserRequest" EntityType="Self.UserRequest" />
+          <EntitySet Name="Resolution" EntityType="Self.Resolution" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="TicketStatus" EntityType="Self.TicketStatus" />
+          <EntitySet Name="TicketTransition" EntityType="Self.TicketTransition" />
+          <EntitySet Name="TicketType" EntityType="Self.TicketType" />
+          <EntitySet Name="LnkRoleToUser" EntityType="Self.LnkRoleToUser" />
+          <EntitySet Name="LnkTeamToPerson" EntityType="Self.LnkTeamToPerson" />
+          <AssociationSet Name="FK_Incident_ToTicket" Association="Self.FK_Incident_ToTicket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Incident" EntitySet="Incident" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChildOrg_ToParentOrg" Association="Self.FK_ChildOrg_ToParentOrg">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Organization1" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_ToOrganization" Association="Self.FK_Team_ToOrganization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToOrganization" Association="Self.FK_Ticket_ToOrganization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToOrganization" Association="Self.FK_User_ToOrganization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkRoleToUser_LinkToPerson" Association="Self.FK_LnkRoleToUser_LinkToPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkTeamToPerson_LinkToPerson" Association="Self.FK_LnkTeamToPerson_LinkToPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="LnkTeamToPerson" EntitySet="LnkTeamToPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToPerson_Caller" Association="Self.FK_Ticket_ToPerson_Caller">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToPerson_Solver" Association="Self.FK_Ticket_ToPerson_Solver">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ToPerson" Association="Self.FK_User_ToPerson">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkTeamToPerson_LinkToTeam" Association="Self.FK_LnkTeamToPerson_LinkToTeam">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="LnkTeamToPerson" EntitySet="LnkTeamToPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToTeam" Association="Self.FK_Ticket_ToTeam">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToResolution" Association="Self.FK_Ticket_ToResolution">
+            <End Role="Resolution" EntitySet="Resolution" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToStatus" Association="Self.FK_Ticket_ToStatus">
+            <End Role="TicketStatus" EntitySet="TicketStatus" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_ToTicketType" Association="Self.FK_Ticket_ToTicketType">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRequest_ToTicket" Association="Self.FK_UserRequest_ToTicket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="UserRequest" EntitySet="UserRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkRoleToUser_LinkToRole" Association="Self.FK_LnkRoleToUser_LinkToRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusFrom_ToTicketStatus" Association="Self.FK_StatusFrom_ToTicketStatus">
+            <End Role="TicketStatus" EntitySet="TicketStatus" />
+            <End Role="TicketTransition" EntitySet="TicketTransition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StatusTo_ToTicketStatus" Association="Self.FK_StatusTo_ToTicketStatus">
+            <End Role="TicketStatus" EntitySet="TicketStatus" />
+            <End Role="TicketTransition" EntitySet="TicketTransition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketStatus_ToTicketType" Association="Self.FK_TicketStatus_ToTicketType">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="TicketStatus" EntitySet="TicketStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketTransition_ToTicketType" Association="Self.FK_TicketTransition_ToTicketType">
+            <End Role="TicketType" EntitySet="TicketType" />
+            <End Role="TicketTransition" EntitySet="TicketTransition" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RorysModelStoreContainer" CdmEntityContainer="RorysEntities">
+          <EntitySetMapping Name="Incident">
+            <EntityTypeMapping TypeName="RorysModel.Incident">
+              <MappingFragment StoreEntitySet="Incident">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="PossibleCyberIncident" ColumnName="PossibleCyberIncident" />
+                <ScalarProperty Name="PossibleGDPRIncident" ColumnName="PossibleGDPRIncident" />
+                <ScalarProperty Name="AffectedSystemsCount" ColumnName="AffectedSystemsCount" />
+                <ScalarProperty Name="AffectedUsersCount" ColumnName="AffectedUsersCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organization">
+            <EntityTypeMapping TypeName="RorysModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Person">
+            <EntityTypeMapping TypeName="RorysModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="Function" ColumnName="Function" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Team">
+            <EntityTypeMapping TypeName="RorysModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket">
+            <EntityTypeMapping TypeName="RorysModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GenReference" ColumnName="GenReference" />
+                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="CallerId" ColumnName="CallerId" />
+                <ScalarProperty Name="SolverTeamId" ColumnName="SolverTeamId" />
+                <ScalarProperty Name="SolverId" ColumnName="SolverId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ResolveDate" ColumnName="ResolveDate" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="TicketLog" ColumnName="TicketLog" />
+                <ScalarProperty Name="ResolutionId" ColumnName="ResolutionId" />
+                <ScalarProperty Name="ResolutionDescription" ColumnName="ResolutionDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="RorysModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRequest">
+            <EntityTypeMapping TypeName="RorysModel.UserRequest">
+              <MappingFragment StoreEntitySet="UserRequest">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="Urgency" ColumnName="Urgency" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resolution">
+            <EntityTypeMapping TypeName="RorysModel.Resolution">
+              <MappingFragment StoreEntitySet="Resolution">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="RorysModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketStatus">
+            <EntityTypeMapping TypeName="RorysModel.TicketStatus">
+              <MappingFragment StoreEntitySet="TicketStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketTransition">
+            <EntityTypeMapping TypeName="RorysModel.TicketTransition">
+              <MappingFragment StoreEntitySet="TicketTransition">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StatusFromId" ColumnName="StatusFromId" />
+                <ScalarProperty Name="StatusToId" ColumnName="StatusToId" />
+                <ScalarProperty Name="TicketTypeId" ColumnName="TicketTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketType">
+            <EntityTypeMapping TypeName="RorysModel.TicketType">
+              <MappingFragment StoreEntitySet="TicketType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LnkRoleToUser">
+            <EntityTypeMapping TypeName="RorysModel.LnkRoleToUser">
+              <MappingFragment StoreEntitySet="LnkRoleToUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LnkTeamToPerson">
+            <EntityTypeMapping TypeName="RorysModel.LnkTeamToPerson">
+              <MappingFragment StoreEntitySet="LnkTeamToPerson">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

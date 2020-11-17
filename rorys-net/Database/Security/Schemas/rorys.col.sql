@@ -1,0 +1,2 @@
+﻿CREATE SCHEMA [rorys.col]
+	AUTHORIZATION [dbo];

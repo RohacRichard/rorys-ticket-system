@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9d12b33bbe54474988d1d5b459d76505" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="RorysModel.Incident" Width="1.5" PointX="8.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.Organization" Width="1.5" PointX="3.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.Person" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.Team" Width="1.5" PointX="3.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.Ticket" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.User" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.UserRequest" Width="1.5" PointX="8.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.Resolution" Width="1.5" PointX="3.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.Role" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.TicketStatus" Width="1.5" PointX="3.75" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.TicketTransition" Width="1.5" PointX="6" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.TicketType" Width="1.5" PointX="1.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.LnkRoleToUser" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RorysModel.LnkTeamToPerson" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <AssociationConnector Association="RorysModel.FK_Incident_ToTicket" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_ChildOrg_ToParentOrg" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_Team_ToOrganization" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_Ticket_ToOrganization" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_User_ToOrganization" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_LnkRoleToUser_LinkToPerson" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_LnkTeamToPerson_LinkToPerson" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_Ticket_ToPerson_Caller" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_Ticket_ToPerson_Solver" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_User_ToPerson" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_LnkTeamToPerson_LinkToTeam" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_Ticket_ToTeam" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_Ticket_ToResolution" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_Ticket_ToStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_Ticket_ToTicketType" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_UserRequest_ToTicket" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_LnkRoleToUser_LinkToRole" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_StatusFrom_ToTicketStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_StatusTo_ToTicketStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_TicketStatus_ToTicketType" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_TicketTransition_ToTicketType" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
