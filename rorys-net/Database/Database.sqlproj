@@ -85,7 +85,6 @@
     <Build Include="Tables\rorys.collections\Resolution.sql" />
     <Build Include="Tables\rorys\Tickets\Incident.sql" />
     <Build Include="Tables\rorys\Tickets\UserRequest.sql" />
-    <Build Include="SchemaCompares\ProjectToLocalhost.scmp" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database.refactorlog" />
