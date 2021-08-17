@@ -11,6 +11,7 @@ namespace Web.JWT
     public class JwtAuthenticationAttribute : Attribute, IAuthenticationFilter
     {
         public string Realm { get; set; }
+        public string Role { get; set; }
         public bool AllowMultiple => false;
 
         public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
@@ -71,9 +72,18 @@ namespace Web.JWT
                 // based on username to get more information from database in order to build local identity
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.Role, "ADMIN")
                     // Add more claims if needed: Roles, ...
                 };
+
+                // TODO after we get information about user and his role
+                var userRole = "ADMIN";
+
+                if (!string.IsNullOrEmpty(Role) && userRole != "ADMIN")
+                {
+                    return Task.FromResult<IPrincipal>(null);
+                }
 
                 var identity = new ClaimsIdentity(claims, "Jwt");
                 IPrincipal user = new ClaimsPrincipal(identity);

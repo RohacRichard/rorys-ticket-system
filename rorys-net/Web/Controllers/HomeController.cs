@@ -14,7 +14,6 @@ namespace Web.Controllers
     public class HomeController : ApiController
     {
         [HttpGet]
-        //[Route("api/home/token")]
         [JwtAuthentication]
         public string Token()
         {
@@ -22,7 +21,6 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        //[Route("api/home/jwt")]
         [AllowAnonymous]
         public string JWT()
         {

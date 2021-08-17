@@ -20,7 +20,8 @@ namespace Web.JWT
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.Role, "ADMIN") // TODO
                 }),
 
                 Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),
