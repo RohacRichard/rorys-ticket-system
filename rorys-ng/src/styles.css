@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.loginscreen {
+    margin: 12px;
+    width: 300px;
+    text-align: center;
+}
+
+.custom-align-items-center {
+    display: flex;
+    align-items: center;  /*Aligns vertically center */
+    justify-content: center; /*Aligns horizontally center */
+}
