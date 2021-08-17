@@ -14,38 +14,19 @@ namespace Web.Controllers
     public class HomeController : ApiController
     {
         [HttpGet]
-        [Route("api/home/token")]
+        //[Route("api/home/token")]
         [JwtAuthentication]
-        public string Get()
+        public string Token()
         {
             return "OK";
         }
 
         [HttpGet]
-        [Route("api/home/jwt")]
+        //[Route("api/home/jwt")]
         [AllowAnonymous]
-        public string JWTTest()
+        public string JWT()
         {
-            //IAuthContainerModel model = GetJWTContainerModel("Richard Rohac", "richardrohac496@gmail.com");
-            //IAuthService authService = new JWTService(model.SecretKey);
-
-            //string token = authService.GenerateToken(model);
-
-            //if (!authService.IsTokenValid(token))
-            //{
-            //    throw new UnauthorizedAccessException();
-            //}
-            //else
-            //{
-            //    List<Claim> claims = authService.GetTokenClaims(token).ToList();
-
-            //    Debug.WriteLine(claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.Name)).Value);
-            //    Debug.WriteLine(claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.Email)).Value);
-            //}
-
             return JWTManager.GenerateToken("richard.rohac");
         }
-
-        
     }
 }
