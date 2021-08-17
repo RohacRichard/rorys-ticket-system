@@ -13,7 +13,7 @@ namespace Web.Controllers
 {
     public class HomeController : ApiController
     {
-        [HttpGet]
+        [HttpGet] 
         [JwtAuthentication]
         public string Token()
         {
