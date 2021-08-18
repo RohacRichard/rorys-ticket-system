@@ -6,10 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Web.JWT;
 
 namespace Web.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class SecurityController : System.Web.Http.ApiController
     {
         private readonly ISecurityOrchestration _securityOrchestration;
