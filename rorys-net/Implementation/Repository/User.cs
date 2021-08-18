@@ -14,6 +14,12 @@ namespace Implementation.Repository
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.LnkRoleToUser = new HashSet<LnkRoleToUser>();
+        }
+    
         public long Id { get; set; }
         public bool ActiveStatus { get; set; }
         public long PersonId { get; set; }
@@ -23,5 +29,7 @@ namespace Implementation.Repository
     
         public virtual Organization Organization { get; set; }
         public virtual Person Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LnkRoleToUser> LnkRoleToUser { get; set; }
     }
 }

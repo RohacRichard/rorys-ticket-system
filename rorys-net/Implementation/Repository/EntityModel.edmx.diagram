@@ -24,7 +24,6 @@
         <AssociationConnector Association="RorysModel.FK_Team_ToOrganization" ManuallyRouted="false" />
         <AssociationConnector Association="RorysModel.FK_Ticket_ToOrganization" ManuallyRouted="false" />
         <AssociationConnector Association="RorysModel.FK_User_ToOrganization" ManuallyRouted="false" />
-        <AssociationConnector Association="RorysModel.FK_LnkRoleToUser_LinkToPerson" ManuallyRouted="false" />
         <AssociationConnector Association="RorysModel.FK_LnkTeamToPerson_LinkToPerson" ManuallyRouted="false" />
         <AssociationConnector Association="RorysModel.FK_Ticket_ToPerson_Caller" ManuallyRouted="false" />
         <AssociationConnector Association="RorysModel.FK_Ticket_ToPerson_Solver" ManuallyRouted="false" />
@@ -40,6 +39,7 @@
         <AssociationConnector Association="RorysModel.FK_StatusTo_ToTicketStatus" ManuallyRouted="false" />
         <AssociationConnector Association="RorysModel.FK_TicketStatus_ToTicketType" ManuallyRouted="false" />
         <AssociationConnector Association="RorysModel.FK_TicketTransition_ToTicketType" ManuallyRouted="false" />
+        <AssociationConnector Association="RorysModel.FK_LnkRoleToUser_LinkToUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

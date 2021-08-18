@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RorysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RorysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Incident">
           <Key>
             <PropertyRef Name="Id" />
@@ -133,7 +133,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PersonId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="RoleId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="LnkTeamToPerson">
@@ -168,18 +168,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LnkRoleToUser_LinkToPerson">
-          <End Role="Person" Type="Self.Person" Multiplicity="1" />
-          <End Role="LnkRoleToUser" Type="Self.LnkRoleToUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Person">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LnkRoleToUser">
-              <PropertyRef Name="PersonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LnkRoleToUser_LinkToRole">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="LnkRoleToUser" Type="Self.LnkRoleToUser" Multiplicity="*" />
@@ -189,6 +177,18 @@
             </Principal>
             <Dependent Role="LnkRoleToUser">
               <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LnkRoleToUser_LinkToUser">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="LnkRoleToUser" Type="Self.LnkRoleToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkRoleToUser">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -419,12 +419,12 @@
             <End Role="Ticket" EntitySet="Ticket" />
             <End Role="Incident" EntitySet="Incident" />
           </AssociationSet>
-          <AssociationSet Name="FK_LnkRoleToUser_LinkToPerson" Association="Self.FK_LnkRoleToUser_LinkToPerson">
-            <End Role="Person" EntitySet="Person" />
-            <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
-          </AssociationSet>
           <AssociationSet Name="FK_LnkRoleToUser_LinkToRole" Association="Self.FK_LnkRoleToUser_LinkToRole">
             <End Role="Role" EntitySet="Role" />
+            <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LnkRoleToUser_LinkToUser" Association="Self.FK_LnkRoleToUser_LinkToUser">
+            <End Role="User" EntitySet="User" />
             <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
           </AssociationSet>
           <AssociationSet Name="FK_LnkTeamToPerson_LinkToPerson" Association="Self.FK_LnkTeamToPerson_LinkToPerson">
@@ -496,8 +496,7 @@
             <End Role="UserRequest" EntitySet="UserRequest" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RorysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -539,7 +538,6 @@
           <Property Name="MobilePhone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Function" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="LnkRoleToUser" Relationship="Self.FK_LnkRoleToUser_LinkToPerson" FromRole="Person" ToRole="LnkRoleToUser" />
           <NavigationProperty Name="LnkTeamToPerson" Relationship="Self.FK_LnkTeamToPerson_LinkToPerson" FromRole="Person" ToRole="LnkTeamToPerson" />
           <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_ToPerson_Caller" FromRole="Person" ToRole="Ticket" />
           <NavigationProperty Name="Ticket1" Relationship="Self.FK_Ticket_ToPerson_Solver" FromRole="Person" ToRole="Ticket" />
@@ -599,6 +597,7 @@
           <Property Name="Password" Type="String" MaxLength="511" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_User_ToOrganization" FromRole="User" ToRole="Organization" />
           <NavigationProperty Name="Person" Relationship="Self.FK_User_ToPerson" FromRole="User" ToRole="Person" />
+          <NavigationProperty Name="LnkRoleToUser" Relationship="RorysModel.FK_LnkRoleToUser_LinkToUser" FromRole="User" ToRole="LnkRoleToUser" />
         </EntityType>
         <EntityType Name="UserRequest">
           <Key>
@@ -667,10 +666,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PersonId" Type="Int64" Nullable="false" />
           <Property Name="RoleId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Person" Relationship="Self.FK_LnkRoleToUser_LinkToPerson" FromRole="LnkRoleToUser" ToRole="Person" />
           <NavigationProperty Name="Role" Relationship="Self.FK_LnkRoleToUser_LinkToRole" FromRole="LnkRoleToUser" ToRole="Role" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="RorysModel.FK_LnkRoleToUser_LinkToUser" FromRole="LnkRoleToUser" ToRole="User" />
         </EntityType>
         <EntityType Name="LnkTeamToPerson">
           <Key>
@@ -739,18 +738,6 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="OrgId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LnkRoleToUser_LinkToPerson">
-          <End Role="Person" Type="Self.Person" Multiplicity="1" />
-          <End Role="LnkRoleToUser" Type="Self.LnkRoleToUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Person">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LnkRoleToUser">
-              <PropertyRef Name="PersonId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -969,10 +956,6 @@
             <End Role="Organization" EntitySet="Organization" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK_LnkRoleToUser_LinkToPerson" Association="Self.FK_LnkRoleToUser_LinkToPerson">
-            <End Role="Person" EntitySet="Person" />
-            <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
-          </AssociationSet>
           <AssociationSet Name="FK_LnkTeamToPerson_LinkToPerson" Association="Self.FK_LnkTeamToPerson_LinkToPerson">
             <End Role="Person" EntitySet="Person" />
             <End Role="LnkTeamToPerson" EntitySet="LnkTeamToPerson" />
@@ -1033,7 +1016,23 @@
             <End Role="TicketType" EntitySet="TicketType" />
             <End Role="TicketTransition" EntitySet="TicketTransition" />
           </AssociationSet>
+          <AssociationSet Name="FK_LnkRoleToUser_LinkToUser" Association="RorysModel.FK_LnkRoleToUser_LinkToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="LnkRoleToUser" EntitySet="LnkRoleToUser" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_LnkRoleToUser_LinkToUser">
+          <End Type="RorysModel.User" Role="User" Multiplicity="1" />
+          <End Type="RorysModel.LnkRoleToUser" Role="LnkRoleToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LnkRoleToUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1178,8 +1177,8 @@
           <EntitySetMapping Name="LnkRoleToUser">
             <EntityTypeMapping TypeName="RorysModel.LnkRoleToUser">
               <MappingFragment StoreEntitySet="LnkRoleToUser">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>

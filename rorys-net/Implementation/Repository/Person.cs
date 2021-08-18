@@ -17,7 +17,6 @@ namespace Implementation.Repository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Person()
         {
-            this.LnkRoleToUser = new HashSet<LnkRoleToUser>();
             this.LnkTeamToPerson = new HashSet<LnkTeamToPerson>();
             this.Ticket = new HashSet<Ticket>();
             this.Ticket1 = new HashSet<Ticket>();
@@ -33,8 +32,6 @@ namespace Implementation.Repository
         public string Function { get; set; }
         public byte[] Picture { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LnkRoleToUser> LnkRoleToUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LnkTeamToPerson> LnkTeamToPerson { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
