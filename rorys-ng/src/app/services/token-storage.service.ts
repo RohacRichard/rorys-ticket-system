@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import jwt_decode from 'jwt-decode'; 
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+const ROLE_KEY = 'auth-roles';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +29,27 @@ export class TokenStorageService {
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
+  public saveRoles(jwtToken: string): void {
+    var decodedJwtToken: any = jwt_decode(jwtToken);
+
+    window.sessionStorage.removeItem(ROLE_KEY);
+    window.sessionStorage.setItem(ROLE_KEY, decodedJwtToken.role);
+  }
+
+  public getRoles(): string[] {
+    const roles = window.sessionStorage.getItem(ROLE_KEY);
+
+    if (roles) {
+      return roles.split(',');
+    }
+
+    return [];
+  }
+
   public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    const user = window.sessionStorage.getItem(TOKEN_KEY);
     if (user) {
-      return JSON.parse(user);
+      return jwt_decode(user);
     }
 
     return {};
