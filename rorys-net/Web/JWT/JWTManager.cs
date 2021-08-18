@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Implementation.Models;
+using Implementation.Repository;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Web.JWT
@@ -10,18 +13,24 @@ namespace Web.JWT
     {
         private const string Secret = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJG8abWvB1GlOgJuQZdcF2Luqm/hccMw==";
 
-        public static string GenerateToken(string username, int expireMinutes = 10080 /*7 days*/)
+        public static string GenerateToken(UserModel userModel, int expireMinutes = 10080 /*7 days*/)
         {
             var symmetricKey = Encoding.UTF8.GetBytes(Secret);
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var now = DateTime.UtcNow;
+
+            var roleStringified = new List<string>();
+            userModel.Roles.ForEach(r =>
+            {
+                roleStringified.Add(r.Name);
+            });
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim(ClaimTypes.Role, "ADMIN") // TODO
+                Subject = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Name, userModel.User.Username),
+                    new Claim(ClaimTypes.Role, String.Join(",", roleStringified))
                 }),
 
                 Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),

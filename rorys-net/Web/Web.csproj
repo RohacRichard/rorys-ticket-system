@@ -214,6 +214,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{55da08a8-915f-4340-b63c-22fc88d15495}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Implementation\Implementation.csproj">
       <Project>{206b793c-e076-4329-bdf9-c2f94d5efdf6}</Project>
       <Name>Implementation</Name>

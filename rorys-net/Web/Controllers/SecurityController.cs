@@ -1,9 +1,12 @@
-﻿using Implementation.Interface;
+﻿using Common.Models;
+using Implementation.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
+using Web.JWT;
 
 namespace Web.Controllers
 {
@@ -16,20 +19,19 @@ namespace Web.Controllers
             _securityOrchestration = securityOrchestration;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public string Test()
-        {
-            var lol = _securityOrchestration.Login("a", "b");
-            return "";
-        }
-
         [HttpPost]
         [AllowAnonymous]
-        public string Login([FromBody] string data)
-        {
-            var lol = _securityOrchestration.Login("a", "b");
-            return data;
+        public HttpResponseMessage Login([FromBody] LoginCredentials loginCredentials)
+        {           
+            var userResult = _securityOrchestration.Login(loginCredentials);
+            if (userResult == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+            }
+
+            var newJwtToken = JWTManager.GenerateToken(userResult);
+
+            return Request.CreateResponse(HttpStatusCode.OK, newJwtToken);
         }
     }
 }

@@ -68,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="OrchestrationInterface\ISecurityOrchestration.cs" />
     <Compile Include="Orchestration\SecurityOrchestration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -162,6 +163,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{55da08a8-915f-4340-b63c-22fc88d15495}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

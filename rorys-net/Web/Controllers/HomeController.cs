@@ -24,7 +24,8 @@ namespace Web.Controllers
         [AllowAnonymous]
         public string JWT()
         {
-            return JWTManager.GenerateToken("richard.rohac");
+            return "";
+            //return JWTManager.GenerateToken("richard.rohac");
         }
     }
 }

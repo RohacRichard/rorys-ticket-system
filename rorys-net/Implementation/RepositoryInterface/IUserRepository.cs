@@ -1,4 +1,5 @@
-﻿using Implementation.Repository;
+﻿using Common.Models;
+using Implementation.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Implementation.RepositoryInterface
     public interface IUserRepository
     {
         IEnumerable<User> GetAll();
+        User CheckLogin(LoginCredentials loginCredentials);
+        List<Role> GetRolesForUser(User user);
     }
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Common.Models;
+using Implementation.Models;
+using Implementation.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +11,6 @@ namespace Implementation.Interface
 {
     public interface ISecurityOrchestration
     {
-        string Login(string username, string password);
+        UserModel Login(LoginCredentials loginCredentials);
     }
 }

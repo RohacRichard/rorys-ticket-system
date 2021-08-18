@@ -1,4 +1,7 @@
-﻿using Implementation.Interface;
+﻿using Common.Models;
+using Implementation.Interface;
+using Implementation.Models;
+using Implementation.Repository;
 using Implementation.RepositoryInterface;
 using System;
 using System.Collections.Generic;
@@ -17,10 +20,20 @@ namespace Implementation.Orchestration
             _userRepository = userRepository;
         }
 
-        public string Login(string username, string password)
+        public UserModel Login(LoginCredentials loginCredentials)
         {
-            var pepe = _userRepository.GetAll();
-            return "";
+            var user = _userRepository.CheckLogin(loginCredentials);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserModel
+            {
+                User = user,
+                Roles = _userRepository.GetRolesForUser(user)
+            };
         }
     }
 }
