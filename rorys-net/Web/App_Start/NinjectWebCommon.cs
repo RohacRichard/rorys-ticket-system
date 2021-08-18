@@ -5,7 +5,10 @@ namespace Web.App_Start
 {
     using System;
     using System.Web;
-
+    using Implementation.Interface;
+    using Implementation.Orchestration;
+    using Implementation.Repository;
+    using Implementation.RepositoryInterface;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -39,13 +42,27 @@ namespace Web.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
-            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
-            kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-            System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver = new Ninject.WebApi.DependencyResolver.NinjectDependencyResolver(kernel);
-            RegisterServices(kernel);
+            //var kernel = new StandardKernel();
+            //kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+            //kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+            //System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver = new Ninject.WebApi.DependencyResolver.NinjectDependencyResolver(kernel);
+            //RegisterServices(kernel);
 
-            return kernel;
+            //return kernel;
+
+            var kernel = new StandardKernel();
+            try
+            {
+                kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+                RegisterServices(kernel);
+                return kernel;
+            }
+            catch
+            {
+                kernel.Dispose();
+                throw;
+            }
         }
 
         /// <summary>
@@ -55,7 +72,11 @@ namespace Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             // Zde pøidávat dependencies pro DI
-            // kernel.Bind<IDetail>().To<Detail>();
+            kernel.Bind<RorysEntities>().ToSelf().InRequestScope();
+
+            kernel.Bind<ISecurityOrchestration>().To<SecurityOrchestration>().InRequestScope();
+            kernel.Bind<IUserRepository>().To<UserRepository>().InRequestScope();
+            
         }
     }
 }
